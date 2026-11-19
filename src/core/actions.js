@@ -13,6 +13,8 @@ import * as music from "../features/music.js";
 import * as places from "../features/places.js";
 import * as more from "../features/more.js";
 import * as settings from "../features/settings.js";
+import * as auth from "../features/auth.js";
+import * as cloud from "../features/cloud.js";
 
 function removeRecord(arg, element) {
   const key = element?.dataset?.key;
@@ -44,12 +46,20 @@ const registry = {
   ...music.actions,
   ...places.actions,
   ...more.actions,
-  ...settings.actions
+  ...settings.actions,
+  ...auth.actions,
+  ...cloud.actions
 };
 
 function dispatch(event) {
   const element = event.target.closest("[data-action]");
   if (!element || element.closest(".modal-host")) return;
+  // Um `change` dentro de um formulário não deve disparar a ação do formulário.
+  // Apenas o elemento que possui a ação (ex.: input de arquivo) responde a `change`.
+  if (event.type === "change" && element !== event.target) return;
+  // Cliques em campos dentro de um formulário não devem enviá-lo.
+  // A ação do formulário só responde ao evento `submit`.
+  if (element.tagName === "FORM" && event.type !== "submit") return;
   const handler = registry[element.dataset.action];
   if (!handler) return;
   event.preventDefault();
@@ -59,4 +69,17 @@ function dispatch(event) {
 export function initActions() {
   document.addEventListener("click", dispatch);
   document.addEventListener("change", dispatch);
+  document.addEventListener("submit", dispatch);
+
+  // Mantém o foco no campo mesmo se algo tentar desfocá-lo ao terminar o clique.
+  const keepFocus = event => {
+    const field = event.target.closest?.(".auth-card input, .auth-card textarea");
+    if (!field) return;
+    queueMicrotask(() => {
+      if (document.contains(field)) field.focus({ preventScroll: true });
+    });
+  };
+  document.addEventListener("pointerup", keepFocus);
+  document.addEventListener("mouseup", keepFocus);
+  document.addEventListener("touchend", keepFocus);
 }

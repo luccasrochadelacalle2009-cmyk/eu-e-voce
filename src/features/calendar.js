@@ -1,4 +1,5 @@
 import { header } from "../ui/layout.js";
+import { authorNote } from "../ui/author.js";
 import { commit, getState, touch } from "../core/store.js";
 import { $, cap, cleanText, esc, fmtDate, isISODate, iso } from "../core/utils.js";
 import { notify } from "../ui/toast.js";
@@ -55,7 +56,8 @@ export function render() {
   if (events.length) {
     events.forEach(({ event, index }) => {
       html += '<div class="list-item"><div class="list-main"><b>' + esc(event.t) + "</b><small>" +
-        esc(event.time || "Sem horário") + " · " + esc(event.by || "Nosso evento") + "</small></div>" +
+        esc(event.time || "Sem horário") + " · " + esc(event.by || "Nosso evento") + "</small>" +
+        authorNote(event) + "</div>" +
         '<button type="button" class="btn ghost small" data-action="remove" data-key="events" data-index="' + index +
         '" aria-label="Excluir compromisso ' + esc(event.t) + '">Excluir</button></div>';
     });

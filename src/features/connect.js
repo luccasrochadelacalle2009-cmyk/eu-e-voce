@@ -1,4 +1,5 @@
 import { header } from "../ui/layout.js";
+import { authorNote } from "../ui/author.js";
 import { commit, getState, touch } from "../core/store.js";
 import { $, cleanText, dayIndex, esc, iso } from "../core/utils.js";
 import { notify } from "../ui/toast.js";
@@ -30,7 +31,8 @@ export function render() {
   if (answers.length) {
     html += '<div class="section-head"><h2>Respostas de hoje</h2></div><section class="card">';
     answers.forEach(answer => {
-      html += '<div class="letter"><p>' + esc(answer.text) + "</p><small>— " + esc(answer.by) + "</small></div>";
+      html += '<div class="letter"><p>' + esc(answer.text) + "</p><small>— " + esc(answer.by) + "</small>" +
+        authorNote(answer) + "</div>";
     });
     html += "</section>";
   }

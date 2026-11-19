@@ -1,4 +1,5 @@
 import { header } from "../ui/layout.js";
+import { authorNote } from "../ui/author.js";
 import { backTarget } from "../core/router.js";
 import { commit, getState, touch } from "../core/store.js";
 import { $, cleanText, esc } from "../core/utils.js";
@@ -43,7 +44,7 @@ export function render() {
     html += '<section class="card"><div class="row"><div class="list-main">' +
       '<b class="plan-title ' + (plan.done ? "done" : "") + '">' + esc(plan.t) + "</b>" +
       "<small>" + esc(plan.cat) + " · " + esc(plan.priority) + "</small>" +
-      (plan.note ? "<small>" + esc(plan.note) + "</small>" : "") + "</div>" +
+      (plan.note ? "<small>" + esc(plan.note) + "</small>" : "") + authorNote(plan) + "</div>" +
       '<button type="button" class="btn ' + (plan.done ? "secondary" : "ghost") + ' small" data-action="toggle-plan" data-index="' + index + '">' +
       (plan.done ? "Feito ✓" : "Concluir") + "</button></div>" +
       '<div class="text-right mt-xs"><button type="button" class="btn ghost small" data-action="remove" data-key="plans" data-index="' + index +

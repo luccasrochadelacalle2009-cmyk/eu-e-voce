@@ -61,6 +61,18 @@ export const PAGE_TITLES = {
 
 export const PAGES = Object.keys(PAGE_TITLES);
 
+export const AUTH_TITLES = {
+  login: "Entrar",
+  signup: "Criar conta",
+  recover: "Recuperar acesso",
+  confirm: "Confirme seu e-mail",
+  reset: "Nova senha",
+  loading: "Carregando",
+  error: "Erro"
+};
+
+export const AUTH_ROUTES = Object.keys(AUTH_TITLES);
+
 export const QUESTIONS = [
   "Qual lugar você gostaria de conhecer comigo?",
   "Que lembrança nossa sempre faz você sorrir?",

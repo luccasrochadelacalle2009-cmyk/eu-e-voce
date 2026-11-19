@@ -3,6 +3,7 @@ import { backTarget } from "../core/router.js";
 import { commit, getState, touch } from "../core/store.js";
 import { $, cleanText, esc, fmtDate, iso } from "../core/utils.js";
 import { notify } from "../ui/toast.js";
+import { authorNote } from "../ui/author.js";
 
 export function render() {
   const state = getState();
@@ -38,6 +39,7 @@ export function render() {
       (locked
         ? '<p class="muted mt-sm">Poderá ser aberta em ' + fmtDate(letter.unlock) + ".</p>"
         : '<div class="letter"><p>' + esc(letter.b) + "</p><small>— " + esc(letter.f) + " · " + esc(fmtDate(letter.d)) + "</small></div>") +
+      authorNote(letter) +
       "</section>";
   });
   return html;

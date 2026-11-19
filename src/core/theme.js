@@ -1,8 +1,6 @@
 import { THEMES } from "./constants.js";
-import { getState } from "./store.js";
-import { saveState } from "./storage.js";
+import { getState, commit } from "./store.js";
 import { $, $$ } from "./utils.js";
-import { notify } from "../ui/toast.js";
 
 const darkQuery = matchMedia("(prefers-color-scheme: dark)");
 
@@ -51,10 +49,11 @@ export function applyTheme(theme) {
 
 export function setTheme(theme) {
   if (!THEMES.includes(theme)) return;
-  getState().theme = theme;
-  applyTheme(theme);
-  saveState(getState());
-  notify("Tema " + themeMeta(theme).label.toLowerCase() + " ativado.");
+  const changed = commit(state => {
+    if (state.theme === theme) return false;
+    state.theme = theme;
+  }, "Tema " + themeMeta(theme).label.toLowerCase() + " ativado.");
+  if (changed) applyTheme(theme);
 }
 
 export function cycleTheme() {

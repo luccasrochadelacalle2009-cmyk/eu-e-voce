@@ -1,4 +1,5 @@
 import { header } from "../ui/layout.js";
+import { authorNote } from "../ui/author.js";
 import { backTarget } from "../core/router.js";
 import { commit, getState, touch } from "../core/store.js";
 import { $, cleanText, esc, safeUrl } from "../core/utils.js";
@@ -34,6 +35,7 @@ export function render() {
       '" aria-label="Excluir música ' + esc(music.name) + '">Excluir</button></div>' +
       (music.meaning ? '<p class="mt-sm">' + esc(music.meaning) + "</p>" : "") +
       (link ? '<a href="' + esc(link) + '" target="_blank" rel="noopener noreferrer">Abrir música ↗</a>' : "") +
+      authorNote(music) +
       "</section>";
   });
   return html;

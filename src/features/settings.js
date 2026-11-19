@@ -4,6 +4,8 @@ import { commit, getState, importState, resetState } from "../core/store.js";
 import { $, cleanText, esc, isISODate } from "../core/utils.js";
 import { notify } from "../ui/toast.js";
 import { openModal } from "../ui/modal.js";
+import { getAuthUser } from "../core/auth.js";
+import { renderCloudSection } from "./cloud.js";
 
 export function render() {
   const state = getState();
@@ -27,6 +29,14 @@ export function render() {
     '<button type="button" class="btn secondary theme-option" data-theme-option="dark" data-action="set-theme" data-arg="dark" aria-pressed="false">☾ Escuro</button>' +
     '<button type="button" class="btn secondary theme-option" data-theme-option="system" data-action="set-theme" data-arg="system" aria-pressed="false">◐ Automático</button>' +
     "</div></section>";
+
+  const account = getAuthUser();
+  html += '<section class="card"><h2>Sua conta</h2>' +
+    '<p class="muted mb-0">Conectado como <b>' + esc(account?.email || "usuário") + "</b>.</p>" +
+    '<p class="small-note mt-xs">Seus dados locais não são apagados ao sair.</p>' +
+    '<button type="button" class="btn ghost small" data-action="logout">Sair da conta</button></section>';
+
+  html += renderCloudSection();
 
   html += '<section class="card"><h2>Seus dados</h2><p class="muted">As informações ficam armazenadas localmente neste navegador. Exporte uma cópia de segurança antes de trocar de aparelho ou limpar os dados do navegador.</p>' +
     '<div class="actions"><button type="button" class="btn secondary" data-action="export-data">Exportar backup</button>' +

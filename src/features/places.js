@@ -1,4 +1,5 @@
 import { header } from "../ui/layout.js";
+import { authorNote } from "../ui/author.js";
 import { backTarget } from "../core/router.js";
 import { commit, getState, touch } from "../core/store.js";
 import { $, cleanText, esc, fmtDate, isISODate } from "../core/utils.js";
@@ -35,7 +36,8 @@ export function render() {
       '<p class="muted mb-0 mt-xs">' + esc(place.address) +
       (place.date ? " · " + esc(fmtDate(place.date)) : "") + "</p>" +
       (place.note ? "<p>" + esc(place.note) + "</p>" : "") +
-      '<a target="_blank" rel="noopener noreferrer" href="' + esc(mapUrl) + '">Ver localização ↗</a></section>';
+      '<a target="_blank" rel="noopener noreferrer" href="' + esc(mapUrl) + '">Ver localização ↗</a>' +
+      authorNote(place) + "</section>";
   });
   return html;
 }

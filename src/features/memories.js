@@ -1,4 +1,5 @@
 import { header } from "../ui/layout.js";
+import { authorNote } from "../ui/author.js";
 import { commit, getState, touch } from "../core/store.js";
 import { $, cleanText, esc, fmtDate, iso, safeImage } from "../core/utils.js";
 import { notify } from "../ui/toast.js";
@@ -36,7 +37,7 @@ export function render() {
         : '<div class="memory-placeholder" aria-hidden="true">✧</div>') +
       '<div class="memory-body"><b>' + esc(memory.t) + "</b>" +
       (memory.text ? "<p>" + esc(memory.text) + "</p>" : "") +
-      "<small>" + esc(fmtDate(memory.d)) + "</small><div>" +
+      "<small>" + esc(fmtDate(memory.d)) + "</small>" + authorNote(memory) + "<div>" +
       '<button type="button" class="btn ghost small" data-action="remove" data-key="wall" data-index="' + index +
       '" aria-label="Excluir memória ' + esc(memory.t) + '">Excluir</button></div></div></article>';
   });

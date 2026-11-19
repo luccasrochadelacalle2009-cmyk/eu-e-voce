@@ -1,4 +1,5 @@
 import { header } from "../ui/layout.js";
+import { authorNote } from "../ui/author.js";
 import { backTarget } from "../core/router.js";
 import { commit, getState, touch } from "../core/store.js";
 import { $, cleanText, esc, fmtDate, iso } from "../core/utils.js";
@@ -32,7 +33,8 @@ export function render() {
       '<button type="button" class="btn ghost small" data-action="remove" data-key="journal" data-index="' + index +
       '" aria-label="Excluir registro ' + esc(entry.t) + '">Excluir</button></div>' +
       '<p class="muted mt-xs mb-0">' + esc(fmtDate(entry.d)) + " · " + esc(entry.by) + "</p>" +
-      '<p class="pre-wrap mt-sm mb-0">' + esc(entry.text) + "</p></section>";
+      '<p class="pre-wrap mt-sm mb-0">' + esc(entry.text) + "</p>" +
+      authorNote(entry) + "</section>";
   });
   return html;
 }
